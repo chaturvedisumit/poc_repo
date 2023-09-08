@@ -18,7 +18,7 @@ jobs:
         title: Your desired title
         body: Auto-created Pull Request
         branch: release # The branch where you commit
-        base: manual_wf-test-1 # Don't forget to specify the right base branch here
+        base: manual_wf-test-2 # Don't forget to specify the right base branch here
     - name: Check outputs
       if: ${{ steps.cpr.outputs.pull-request-number }}
       run: |
