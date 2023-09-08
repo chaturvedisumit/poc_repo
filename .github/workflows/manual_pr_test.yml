@@ -16,4 +16,5 @@ jobs:
         title: Your desired title
         body: Auto-created Pull Request
         branch: release # The branch where you commit
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         base: manual_wf-test-1 # Don't forget to specify the right base branch here
