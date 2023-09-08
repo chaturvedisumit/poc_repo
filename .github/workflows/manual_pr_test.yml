@@ -1,25 +1,19 @@
-name: Pull Request Action
+name: Manual_2 workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
 on:
   workflow_dispatch:
-   
 
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "develop"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_label: "feature, automated pr"
-          pr_title: "[Example] Simple demo"
-
-
-
-
-
-
-
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3.10.1
+      with:
+        commit-message: Auto Pull Request
+        title: Your desired title
+        body: Auto-created Pull Request
+        branch: release # The branch where you commit
+        base: manual_wf-test-1 # Don't forget to specify the right base branch here
