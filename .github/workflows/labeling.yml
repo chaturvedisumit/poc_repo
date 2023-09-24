@@ -1,35 +1,17 @@
-name: Auto Labeling
+name: Automatic Labeler
 
 on:
-  push:
-    branches:
-      - main
+  issues:
+    types:
+      - opened
 
 jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract Branch Name
-        id: extract
-        run: |
-          branch_name="${{ github.ref }}"
-          echo "::set-output name=branch::$branch_name"
-          echo "Branch Name: $branch_name"
-
-      - name: Apply Labels
-        run: |
-          branch_name="${{ steps.extract.outputs.branch }}"
-          if [[ $branch_name == feature/* ]]; then
-            echo "Applying 'feature' label"
-            # Use GitHub API to apply the 'feature' label
-          elif [[ $branch_name == bugfix/* ]]; then
-            echo "Applying 'bugfix' label"
-            # Use GitHub API to apply the 'bugfix' label
-          elif [[ $branch_name == hotfix/* ]]; then
-            echo "Applying 'hotfix' label"
-            # Use GitHub API to apply the 'hotfix' label
-          else
-            echo "No matching label found for the branch."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Labels
+        uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            {"bug": ["bug", "fix"], "feature": ["feature"], "hotfix": ["hotfix"]}
